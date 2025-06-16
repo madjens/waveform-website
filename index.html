@@ -26,12 +26,12 @@
       border: 1px solid #555;
       padding: 10px;
       width: 160px;      /* was 80px */
-      font-size: 1.2rem; /* larger text */
+      font-size: 1.4rem; /* larger text */
       border-radius: 4px;
     }
     label {
       margin-right: 8px;
-      font-size: 1.1rem;
+      font-size: 1.3rem;
     }
   </style>
 </head>
@@ -74,7 +74,7 @@
 
       // draw sine-wave
       ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 4;
       ctx.beginPath();
       for (let x = 0; x <= width; x += 2) {
         const phase = 2 * Math.PI * freq * t - k() * x;
