@@ -22,7 +22,7 @@
 <body>
   <div id="controls">
     <label for="freq">Frequency (Hz):</label>
-    <input type="number" id="freq" value="1" min="0.1" step="0.1">
+    <input type="number" id="freq" value="1" min="0.01" step="0.1">
   </div>
   <canvas id="wave"></canvas>
 
@@ -62,7 +62,7 @@
 
       // draw sine‐wave
       ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 4;
       ctx.beginPath();
       for (let x = 0; x <= width; x += 2) {
         const phase = 2*Math.PI*freq*t - k*x;
@@ -77,7 +77,7 @@
       const midY   = centerY + amplitude * Math.sin(midPh);
       ctx.fillStyle = '#fff';
       ctx.beginPath();
-      ctx.arc(midX, midY, 5, 0, 2*Math.PI);
+      ctx.arc(midX, midY, 5, 0, 5*Math.PI);
       ctx.fill();
 
       requestAnimationFrame(draw);
