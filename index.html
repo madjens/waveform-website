@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Waveform Visualizer</title>
+  <style>
+    /* Full-page black background, white text */
+    body { margin:0; background:#000; color:#fff; display:flex; flex-direction:column; align-items:center; }
+    #controls { margin:10px; }
+    canvas { display:block; }
+    /* Style the input */
+    input[type=number] {
+      background:#222;
+      color:#fff;
+      border:1px solid #555;
+      padding:5px;
+      width:80px;
+    }
+    label { margin-right:5px; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <label for="freq">Frequency (Hz):</label>
+    <input type="number" id="freq" value="1" min="0.1" step="0.1">
+  </div>
+  <canvas id="wave"></canvas>
+
+  <script>
+    const canvas = document.getElementById('wave');
+    const ctx    = canvas.getContext('2d');
+    const freqIn = document.getElementById('freq');
+
+    let width, height, centerY, freq = parseFloat(freqIn.value);
+
+    // Resize‐handler
+    function resize() {
+      width  = canvas.width = window.innerWidth;
+      // leave room for controls at top
+      height = canvas.height = window.innerHeight - document.getElementById('controls').offsetHeight;
+      centerY = height/2 + document.getElementById('controls').offsetHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Update frequency when user changes input
+    freqIn.addEventListener('input', () => {
+      const v = parseFloat(freqIn.value);
+      freq = isNaN(v) ? 1 : v;
+    });
+
+    let startTime = null;
+    const amplitude = height/4;            // wave height
+    const k = 2*Math.PI/width;             // one wavelength = canvas width
+
+    function draw(ts) {
+      if (!startTime) startTime = ts;
+      const t = (ts - startTime)/1000;     // time in seconds
+
+      // clear
+      ctx.clearRect(0, 0, width, height);
+
+      // draw sine‐wave
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let x = 0; x <= width; x += 2) {
+        const phase = 2*Math.PI*freq*t - k*x;
+        const y = centerY + amplitude * Math.sin(phase);
+        x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+
+      // draw dot at middle of screen
+      const midX   = width/2;
+      const midPh  = 2*Math.PI*freq*t - k*midX;
+      const midY   = centerY + amplitude * Math.sin(midPh);
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(midX, midY, 5, 0, 2*Math.PI);
+      ctx.fill();
+
+      requestAnimationFrame(draw);
+    }
+
+    requestAnimationFrame(draw);
+  </script>
+</body>
+</html>
