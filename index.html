@@ -19,19 +19,19 @@
     canvas {
       display: block;
     }
-    /* Style the input: twice as wide and a bit taller */
-    input[type=number] {
+
+     input[type=number] {
       background: #222;
       color: #fff;
-      border: 1px solid #555;
-      padding: 10px;
-      width: 160px;      /* was 80px */
-      font-size: 1.4rem; /* larger text */
+      border: 2px solid #555;
+      padding: 15px;
+      width: 200px;
+      font-size: 1.8rem;
       border-radius: 4px;
     }
     label {
       margin-right: 8px;
-      font-size: 1.3rem;
+      font-size: 1.7rem;
     }
   </style>
 </head>
@@ -74,7 +74,7 @@
 
       // draw sine-wave
       ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 8;
       ctx.beginPath();
       for (let x = 0; x <= width; x += 2) {
         const phase = 2 * Math.PI * freq * t - k() * x;
@@ -89,7 +89,7 @@
       const midY  = centerY + amplitude() * Math.sin(midPh);
       ctx.fillStyle = '#fff';
       ctx.beginPath();
-      ctx.arc(midX, midY, 10, 0, 2 * Math.PI);  /* radius doubled from 5 to 10 */
+      ctx.arc(midX, midY, 16, 0, 2 * Math.PI);  /* radius doubled from 5 to 10 */
       ctx.fill();
 
       requestAnimationFrame(draw);
